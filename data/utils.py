@@ -23,4 +23,7 @@ def csv_to_json(f_csv, f_json, model):
 
 
 csv_to_json('ads.csv', 'ads.json', 'ads.ad')
-csv_to_json('categories.csv', 'categories.json', 'ads.categories')
+csv_to_json('category.csv', 'category.json', 'ads.categories')
+csv_to_json('user.csv', 'user.json', 'users.user')
+csv_to_json('location.csv', 'location.json', 'users.location')
+
