@@ -18,8 +18,28 @@ def index(request):
 
 class AdListView(ListView):
     model = Ad
+    queryset = Ad.objects.all()
 
     def get(self, request, *args, **kwargs):
+        cat = request.GET.get('cat', None)
+        text = request.GET.get('text', None)
+        price_from = request.GET.get('price_from', None)
+        price_to = request.GET.get('price_to', None)
+        if cat:
+            self.queryset = self.queryset.filter(
+                category__id__contains=cat)
+            super().get(request, *args, **kwargs)
+        if text:
+            self.queryset = self.queryset.filter(
+                name__icontains=text)
+            super().get(request, *args, **kwargs)
+        if price_from or price_to:
+            if not price_to:
+                price_to = 100000
+            if not price_from:
+                price_from = 0
+            self.queryset = self.queryset.filter(
+                price__range=(price_from, price_to))
         super().get(request, *args, **kwargs)
 
         self.object_list = self.object_list.order_by('-price')
