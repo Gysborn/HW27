@@ -24,7 +24,7 @@ from HW27_Avito import settings
 from users.views import LocationsViewSet
 
 router = routers.SimpleRouter()
-router.register('loc', LocationsViewSet)
+router.register('location', LocationsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
