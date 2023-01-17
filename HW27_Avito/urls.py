@@ -16,7 +16,6 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 
-
 from django.urls import path, include
 from rest_framework import routers
 
@@ -34,18 +33,15 @@ router_sel.register('selection', SelectionsViewSet)
 router_ad = routers.SimpleRouter()
 router_ad.register('ad', AdViewSet)
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentications.urls')),
- #  path('', include('ads.urls')),
     path('', include('ads.cat.urls')),
 ]
 
 urlpatterns += router.urls
 urlpatterns += router_sel.urls
 urlpatterns += router_ad.urls
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
