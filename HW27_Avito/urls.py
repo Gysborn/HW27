@@ -21,18 +21,31 @@ from django.urls import path, include
 from rest_framework import routers
 
 from HW27_Avito import settings
-from users.views import LocationsViewSet
+from ads.selections.view import SelectionsViewSet
+from ads.views import AdViewSet
+from authentications.views import LocationsViewSet
 
 router = routers.SimpleRouter()
 router.register('location', LocationsViewSet)
 
+router_sel = routers.SimpleRouter()
+router_sel.register('selection', SelectionsViewSet)
+
+router_ad = routers.SimpleRouter()
+router_ad.register('ad', AdViewSet)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('users.urls')),
-    path('', include('ads.urls')),
+    path('', include('authentications.urls')),
+ #  path('', include('ads.urls')),
     path('', include('ads.cat.urls')),
 ]
+
 urlpatterns += router.urls
+urlpatterns += router_sel.urls
+urlpatterns += router_ad.urls
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

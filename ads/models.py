@@ -1,9 +1,11 @@
 from django.db import models
 
+from authentications.models import User
+
 
 class Ad(models.Model):
     name = models.CharField(max_length=200)
-    author = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.PositiveIntegerField()
     description = models.TextField()
     image = models.ImageField(null=True, blank=True, upload_to='pictures')
@@ -27,3 +29,16 @@ class Categories(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+
+
+class Selections(models.Model):
+    name = models.CharField(max_length=200)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(Ad)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Подборка"
+        verbose_name_plural = "Подборки"

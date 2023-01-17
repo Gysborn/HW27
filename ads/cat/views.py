@@ -8,6 +8,9 @@ from django.views.generic import DetailView, ListView, CreateView, UpdateView, D
 from ads.models import Categories
 
 
+
+
+
 class CatListView(ListView):
     model = Categories
 
