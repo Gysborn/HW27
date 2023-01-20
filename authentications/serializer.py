@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from authentications.models import User, Location
+from authentications.validators import CheckBirthdayValidator
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,10 +26,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
         queryset=Location.objects.all(),
         slug_field='name'
     )
-
+    email = serializers.CharField(max_length=254, validators=[UniqueValidator(queryset=User.objects.all())])
+    # TODO: Добавьте поле email, сделайте его уникальным и запретите регистрацию с почтового адреса в домене rambler.ru.
+    birth_date = serializers.DateField(validators=[CheckBirthdayValidator(3285)])
+    # TODO: Запретите регистрироваться пользователям младше 9 лет. Да!
     class Meta:
         model = User
-        fields = '__all__'
+        exclude = ["groups", "user_permissions"]
 
     def is_valid(self, raise_exception=False):
         self._locations = self.initial_data.pop('locations', [])
